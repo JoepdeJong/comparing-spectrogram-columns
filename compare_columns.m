@@ -4,15 +4,15 @@ function [] = compare_columns(filename, window, overlap_of_samples, number_of_fr
     x = x(:, 1); % Get the first channel of the signal.
     
     X = make_spectrogram(x, sample_rate, window, overlap_of_samples, number_of_frequencies);
-    
-    Y = real(X); % Omit phase information
    
-    len = size(Y, 2); % Number of columns in the spectrogram
     
     for delta = range_delta
         delta
         for number_of_overlaps = range_number_of_overlaps
-            number_of_overlaps
+            number_of_overlaps            
+            
+            Y = real(X); % Omit phase information
+            len = size(Y, 2); % Number of columns in the spectrogram
             
             
             % Calculate the average amplitude over time for each frequency
@@ -42,9 +42,6 @@ function [] = compare_columns(filename, window, overlap_of_samples, number_of_fr
 
                 % Check if the number of overlaps exceeds the threshold
                 if(O_k(k) >= number_of_overlaps)
-%                     k % Debugging
-
-            %             if(dst(k, l))
 
                     % Loop over all rows (frequencies)
                     for m = 1:number_of_frequencies
@@ -79,9 +76,6 @@ function [] = compare_columns(filename, window, overlap_of_samples, number_of_fr
                     end
                 end
             end
-            
-               % YI = Y;
-            % Y = 1i*Y + YR;
 
             y = invert_spectrogram(Y, sample_rate, window, overlap_of_samples, number_of_frequencies);
 
